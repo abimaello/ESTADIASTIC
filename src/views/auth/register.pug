@@ -1,0 +1,82 @@
+extends ../layout/index 
+
+block content
+    div.py-10
+
+        h1.text-center.text-4xl.my-10.font-extrabold.text-greenTIC UTXJ 
+            span.font-normal.text-grayTIC ESTADIAS TIC
+        h2.text-center.text-3xl.font-extrabold.text-petrolTIC= page 
+
+         if errors
+            each error in errors
+                div(class="mx-auto max-w-md text-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert")
+                    strong(class="font-bold") Error:
+                    span= error.msg
+                    button(class="absolute top-0 bottom-0 right-0 px-4 py-3" aria-label="Close" onclick="this.parentElement.style.display='none'")
+                        i(class="fas fa-times")
+
+        script.
+            setTimeout(function(){
+                var alerts = document.querySelectorAll('[role="alert"]');
+                alerts.forEach(function(alert) {
+                    alert.style.display = 'none';
+                });
+            }, 5000);
+
+        .mt-8.mx-auto.max-w-xl 
+            .bg-white.py-8.px-4.shadow-xl.rounded-lg 
+            
+                form(action="register" method="POST" noValidate).space-y-5
+
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="matricula") Matricula 
+                        input#matricula.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingresa tu matricula"
+                        type="number" name="matricula" value=alumno && alumno.matricula ? alumno.matricula : "")
+
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Email
+                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="matricula@utxicotepec.edu.mx"
+                        type="email" name="email" value=alumno && alumno.email ? alumno.email : "")
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="nombre") Tu nombre 
+                        input#nombre.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu nombre"
+                        type="text" name="nombre" value=alumno && alumno.nombre ? alumno.nombre : "")
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="AP") Apellido paterno
+                        input#AP.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu primer apellido"
+                        type="text" name="AP" value=alumno && alumno.AP ? alumno.AP : "")
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="AM") Apellido materno
+                        input#AM.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu segundo apellido"
+                        type="text" name="AM" value=alumno && alumno.AM ? alumno.AM : "")
+                    
+                    div
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="genero") Selecciona tu género 
+                        select#genero.form-select(name="genero")
+                            option(value="Hombre") Hombre
+                            option(value="Mujer") Mujer
+                            option(value="NB") No binario
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="edad") Edad
+                        input#edad.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu edad aquí"
+                        type="number" name="edad" value=alumno && alumno.edad ? alumno.edad : "")    
+                    div
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="programa") Selecciona tu programa educativo 
+                        select#programa.form-select(name="programa")
+                            option(value="TSU-DSM") TSU Desarrollo de software multiplataforma
+                            option(value="TSU-ENVD") TSU Entornos virtuales y negocios digitales
+                            option(value="ING-DGS") Ingeniería en Desarrollo y Gestión de Software
+                            option(value="ING-ENVD") Ingeniería en Entornos virtuales y negocios digitales    
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="password") Contraseña 
+                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Crea tu contraseña"
+                        type="password" name="password")
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="confirm-password") Repite tu contraseña
+                        input#confirm-password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Repite tu contraseña"
+                        type="password" name="confirm-password")
+
+                    input(class="w-full bg-greenTIC hover:bg-petrolTIC text-white font-bold py-3 cursor-pointer" type="submit" value="Crear cuenta")
+
+                    .flex.items-center.justify-center
+                        a.text-gray-500.text-xs(href="/login") Iniciar sesión
