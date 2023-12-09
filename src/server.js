@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser';
 import Alumno from './models/Alumno.js';
 import Genero from './models/Genero.js';
 import Programa from './models/Programa.js';
+
 //import {User, Property} from './models/Links.js';
 import dotenv from 'dotenv';
 //import propertyRoutes from './routes/propertyRoutes.js';

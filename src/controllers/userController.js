@@ -54,6 +54,7 @@ const insertarAlumno = async (request, response) => {
 
     const { matricula,email, nombre, AP, AM, genero, edad, programa, password } = request.body;
 
+
     if (userExists) {
 
         response.render("auth/register.pug", ({
@@ -72,7 +73,8 @@ const insertarAlumno = async (request, response) => {
         //*Creando usuario */
 
         let nuevoAlumno = await Alumno.create({
-            matricula,email, nombre, AP, AM, genero, edad, programa, password, token
+            matricula,email, nombre, AP, AM, genero_id: genero, edad, programa_id:programa, password, token
+                        
         });
         response.render("templates/message.pug", {
             page: "Su cuenta se creó con éxito",
@@ -325,10 +327,10 @@ const authenticateUser = async (request, response) => {
 }
 
 const userHome = (request, response) => {
-    const token = request.cookies._token;
-    console.log(token)
-    response.render('user/home', {
-        showHeader: true,
+   const token = request.cookies._token;
+   console.log(token)
+    response.render('/home', {
+        //showHeader: true,
         page: "Home"
     })
 }

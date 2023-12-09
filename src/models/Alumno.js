@@ -27,19 +27,12 @@ const Alumno=db.define('tb_alumnos', {
         allowNull: true
     },
     
-    genero: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
 
     edad: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    programa:{
-        type: DataTypes.STRING,
-        allowNull: false
-    },
+   
     
     password: {
         type: DataTypes.STRING,
