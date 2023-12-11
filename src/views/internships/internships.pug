@@ -1,0 +1,47 @@
+extends ../layout/index
+
+block content
+
+    h1.text-3xl.font-bold.mb-2.text-center.mt-12.text-greenTIC.rounded-2xl.pt-5 Estadías disponibles
+
+    .bg-white.shadow.py-8.px-4.rounded-xl.mx-auto.my-10.w-full(class="md:px-10")
+        <table class="table-auto">
+            <thead class="text-sm">
+                <tr>
+                    <th>Empresa</th>
+                    <th>Programa</th>
+                    <th>Actividades</th>
+                    <th>Requisitos</th>
+                    <th>Método de selección  </th>
+                    <th>Total Vacantes</th>
+                    <th>Contacto</th>
+                    <th>Cargo contacto</th>
+                    <th>Duración </th>
+                    <th>Ubicación </th>
+                    <th>Postular</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm">
+                <tr>
+                    <td class="px-2">CIPSA</td>
+                    <td class="px-2">TSU DSM</td>
+                    <td class="px-2">Realizar actividades de manejo de base de datos </td>
+                    <td class="px-2">Conocimiento mysql, sequelize, mariadb</td>
+                    <td class="px-2">Entrevista</td>
+                    <td class="px-2">2</td>
+                    <td class="px-2">Luis González</td>
+                    <td class="px-2">Gerente de RRHH</td>
+                    <td class="px-2">4 meses</td>
+                    <td class="px-2">Vicente Guerrero 268, Las Azaleas, Xicotepec de Juárez</td>
+                </tr>
+                
+                
+            </tbody>
+        </table>
+
+
+
+
+
+    footer(class="bg-grayTIC text-white p-4 text-center")
+          p.text-sm © #{new Date().getFullYear()} Universidad Tecnológica de Xicotepec de Juarez. Todos los derechos reservados.

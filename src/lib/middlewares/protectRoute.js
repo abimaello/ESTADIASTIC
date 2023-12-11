@@ -1,5 +1,5 @@
 import jsonWebToken from "jsonwebtoken"
-import Alumno from "../../models/Alumn.js";
+import Alumno from "../../models/Alumno.js";
 
 
 import dotenv from 'dotenv';

@@ -1,0 +1,39 @@
+extends ../layout/index
+
+block content
+
+    
+    h2.text-2xl.font-bold.mb-2text-center.text-center.text-grayTIC= page 
+    if errors
+            each error in errors
+                div(class="mx-auto max-w-md text-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 text-xs" role="alert")
+                    strong(class="font-bold") Error:
+                    span= error.msg
+                    button(class="absolute top-0 bottom-0 right-0 px-4 py-3" aria-label="Close" onclick="this.parentElement.style.display='none'")
+                        i(class="fas fa-times")
+
+            script.
+                setTimeout(function(){
+                    var alerts = document.querySelectorAll('[role="alert"]');
+                    alerts.forEach(function(alert) {
+                        alert.style.display = 'none';
+                    });
+                }, 5000);
+
+    .bg-white.shadow.py-8.px-4.rounded-xl.mx-auto.max-w-4xl.my-10(class="md:px-10")
+            form.space-y-8(action="/internships/contact" method="POST" noValidate)
+                .space-y-8 
+                    h3.text-lg.leading-6.font-md.text-petrolTIC.font-bold.text-justify Contacto
+                    p.text-grayTIC.text-justify.text-lg Por favor proporciona las dudas o información que necesitas sobre Estadías TIC
+                div 
+                    label.block.text-sm.uppercase.text-grayAM.mb-3.font-bold.text-justify(for="title") Motivo 
+                    input#tema.text-sm.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(type="text" name="tema" placeholder="Ej. Cómo me inscribo" value=alumnoData && alumnoData.tema ? alumnoData.tema: '')
+                div 
+                    label.block.text-sm.uppercase.text-grayAM.mb-3.font-bold.text-justify(for="description") Detalles 
+                    textarea#descripcion.text-sm.w-full.px-3.py-2.border.border-gray-200.rounded-md.placeholder-gray-400(type="text" name="descripcion" placeholder="Ej. Quiero saber cómo es el proceso para inscribirme en una estadía que me interesa" value=alumnoData && alumnoData.descripcion ? alumnoData.descripcion: '')
+
+            input#btn-save.w-full.mt-4(class="text-white text-lg font-bold py-3 cursor-pointer bg-greenTIC rounded-xl hover:bg-petrolTIC hover:text-white" type="submit" value="Enviar")
+
+
+    footer(class="bg-grayTIC text-white p-4 text-center")
+          p.text-sm © #{new Date().getFullYear()} Universidad Tecnológica de Xicotepec de Juarez. Todos los derechos reservados.

@@ -1,16 +1,29 @@
-import Alumno from './Alumno.js';
+import Alumno from './User.js';
 import Genero from './Genero.js';
 import Programa from './Programa.js';
+import Contacto from './Contacto.js';
+import Empresa from './Empresa.js';
+import Estadia from './Estadia.js';
 
-
-Programa.hasOne(Alumno,{
-    foreignKey: 'programa_ID'
+Alumno.belongsTo(Programa,{
+    foreignKey:'alumno_id'
 })
 
 Genero.hasOne(Alumno,{
-    foreignKey: 'genero_ID'
+    foreignKey: 'genero_id'
 }) //ForeingKey
 
 
+Alumno.hasMany(Contacto,{
+    foreignKey: 'alumno_id'
+})
 
-export{Alumno, Genero, Programa}
+
+Empresa.hasMany(Estadia,{
+    foreignKey: 'empresa_id'
+})
+
+export{Alumno, Empresa}
+
+
+

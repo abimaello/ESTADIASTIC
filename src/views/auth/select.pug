@@ -1,0 +1,19 @@
+extends ../layout/index 
+
+block content
+    div.py-5
+
+        h1.text-center.text-4xl.my-10.font-extrabold.text-greenTIC UTXJ 
+            span.font-normal.text-grayTIC ESTADIAS TIC
+        h2.text-center.text-3xl.font-extrabold.text-petrolTIC= page 
+
+    .mt-8.mx-auto.max-w-xl 
+        .bg-white.py-8.px-4.shadow-xl.rounded-lg 
+
+            img(class="h-auto max-w-xs mx-auto"  src="/img/chica.svg", alt="chica con ordenador")
+
+           
+            div.flex.items.center.justify-evenly.pt-5
+                nav(class="my-5 text-sm md:flex items-center md:gap-5 font-bold text-white  mx-10%")
+                    a(href="/login/register" class="bg-greenTIC py-2 px-10 rounded-lg hover:bg-petrolTIC") SOY ALUMNO
+                    a(href="/login/registerAdmin" class="bg-greenTIC py-2 px-10 rounded-lg hover:bg-petrolTIC") SOY ADMIN

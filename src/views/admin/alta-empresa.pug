@@ -1,9 +1,9 @@
-extends ../layout/index
+extends ../layout/indexAdmin
+block styles
+    link(rel="stylesheet", href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
 
-block contenido 
+block content
     div.py-10  
-        h1.text-center.text-4xl.my-10.font-extrabold.text-greenTIC Estadías
-            span.font-normal.text-petrolTIC TIC
         h2.text-center.text-3xl.font-extrabold.text-grayTIC= page
 
         if errors
@@ -24,10 +24,10 @@ block contenido
         
         .mt-8.mx-auto.max-w-xl
             .bg-white.py-8.px-4.shadow-xl.rounded-lg
-                form.space-y-5(action="registrar" method="POST" noValidate)
+                form.space-y-5(action="/panel" method="POST" noValidate)
                     div 
                         label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="name") Nombre de la empresa:
-                        input#name.w-full.px-3.py-2.border.border-gray-300.rounded-sm.text-petrolTIC(class="placeholder:text-greenTIC" placeholder="Nombre comercial" name="name" type="text" )
+                        input#nombre.w-full.px-3.py-2.border.border-gray-300.rounded-sm.text-petrolTIC(class="placeholder:text-greenTIC" placeholder="Nombre comercial" name="nombre" type="text" )
                     div 
                         label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="giro") Giro de la empresa:
                         input#giro.w-full.px-3.py-2.border.border-gray-300.rounded-sm.text-petrolTIC(class="placeholder:text-greenTIC" placeholder="Tecnología, Industria, Automotriz..." name="giro" type="text" )
@@ -44,25 +44,20 @@ block contenido
         
                         label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="email") Email:
                         input#email.w-full.px-3.py-2.border.border-gray-300.rounded-sm.text-petrolTIC(class="placeholder:text-greenTIC" placeholder="user@domain.com" name="email" type="email")
-                    div 
-                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="direccion") Dirección:
-                        input#direccion.w-full.px-3.py-2.border.border-gray-300.rounded-sm.text-petrolTIC(class="placeholder:text-greenTIC" placeholder="Calle, Número y Colonia" name="direccion" type="text" )
-                    div 
-                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="municipio") Municipio:
-                        input#municipio.w-full.px-3.py-2.border.border-gray-300.rounded-sm.text-petrolTIC(class="placeholder:text-greenTIC"  name="municipio" type="text" )
-                    div 
-                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="estado") Estado:
-                        input#estado.w-full.px-3.py-2.border.border-gray-300.rounded-sm.text-petrolTIC(class="placeholder:text-greenTIC"  name="estado" type="text" )
-                    div 
-                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="pais") País:
-                        input#pais.w-full.px-3.py-2.border.border-gray-300.rounded-sm.text-petrolTIC(class="placeholder:text-greenTIC"  name="pais" type="text" )
-                    div 
-                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="cp") Código Postal:
-                        input#cp.w-full.px-3.py-2.border.border-gray-300.rounded-sm.text-petrolTIC(class="placeholder:text-greenTIC"  placeholder="00000" name="cp" type="text" )
-
-        
-                    div 
-                        input#button_register.w-full.bg-petrolTIC.text-creamTIC.font-bold.py-3.rounded-xl(class="hover:bg-greenTIC cursor-pointer" type="submit" value="Dar de alta empresa")
-
-                    div.flex.items-center.justify-around.pt-10
-                        a.text-sm.text-greenTIC(href="/login" class="hover:text-petrolTIC decoration-4 cursor-pointer") Ver listado empresas
+                    .border-gray-400.border-t.py-5.space-y-5
+                        - console.log(` aqui estoy...... `)
+                        - console.log(data)
+                        
+                        h3.block.text-sm.uppercase.text-gray-600.mb-3.font-bold Ubicación
+                        p.text-gray-600 Elige la ubicación de la empresa
+                    #map.h-96
+                    div
+                        p.street
+                    input#btn-save.w-full.bg-greenTIC.text-white(class="text-gray-800 font-bold py-3 cursor-pointer rounded-xl hover:bg-petrolTIC hover:text-white" type="submit" value="Continuar")
+block scripts
+    script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
+    script(src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js")
+    script(src="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/2.7.0/bundle.min.js")
+    script( src="/js/map.js") 
+         

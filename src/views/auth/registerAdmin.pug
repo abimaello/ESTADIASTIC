@@ -9,7 +9,7 @@ block content
 
          if errors
             each error in errors
-                div(class="mx-auto max-w-md text-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 text-xs" role="alert")
+                div(class="mx-auto max-w-md text-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert")
                     strong(class="font-bold") Error:
                     span= error.msg
                     button(class="absolute top-0 bottom-0 right-0 px-4 py-3" aria-label="Close" onclick="this.parentElement.style.display='none'")
@@ -32,9 +32,9 @@ block content
                 form(action="register" method="POST" noValidate).space-y-5
 
                     div 
-                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="matricula") Matricula 
-                        input#matricula.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingresa tu matricula"
-                        type="number" name="matricula" value=alumno && alumno.matricula ? alumno.matricula : "")
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="matricula") N. Trabajador
+                        input#trabajador.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingresa tu número de trabajador"
+                        type="number" name="trabajador" value=admin && admin.trabajador ? admin.trabajador : "")
 
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Email
@@ -66,10 +66,9 @@ block content
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="programa") Selecciona tu programa educativo 
                         select#programa.form-select(name="programa")
-                            option(value="TSU-DSM") TSU Desarrollo de software multiplataforma
-                            option(value="TSU-ENVD") TSU Entornos virtuales y negocios digitales
-                            option(value="ING-DGS") Ingeniería en Desarrollo y Gestión de Software
-                            option(value="ING-ENVD") Ingeniería en Entornos virtuales y negocios digitales    
+                            option(value="DSM") Tecnologías de la Información y Comunicación
+                            
+                              
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="password") Contraseña 
                         input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Crea tu contraseña"
@@ -82,5 +81,5 @@ block content
                     input(class="w-full bg-greenTIC hover:bg-petrolTIC text-white font-bold py-3 cursor-pointer" type="submit" value="Crear cuenta")
 
                     .flex.items-center.justify-evenly
-                        a.text-gray-500.text-xs(href="/login/student" class="hover:text-greenTIC") Iniciar sesión
+                        a.text-gray-500.text-xs(href="/loginAdmon/loginA" class="hover:text-greenTIC") Iniciar sesión
                         a.text-gray-500.text-xs(href="/login" class="hover:text-greenTIC") Regresar

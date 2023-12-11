@@ -1,55 +1,38 @@
 import e, {request, response} from 'express'
+//import Alumno from "../models/Alumno.js";
+import Admin from '../models/Admin.js';
 import { generateToken, generateJwt } from "../lib/tokens.js";
 import bcrypt from 'bcrypt';
 import { check, validationResult } from "express-validator" 
 import { json } from "sequelize"
-
 import { emailRegister, emailPasswordRecovery } from "../lib/emails.js";
-import Alumno from '../models/Alumno.js';
-
-const selectType = (request, response)=>{
-   
-    response.render("../views/auth/select.pug", {
-        isLogged: false,
-        page: "Gestión de Usuarios",
-
-    })
-
-}
 
 const formLogin = (request, response) => {
 
-    response.render("../views/auth/login.pug", {
+    response.render("../views/auth/loginA.pug", {
         isLogged: false,
         page: "Login",
+
     })
 }
 
-const formAdmon = (request, response) => {
+const formRegister = (request, response) => {
 
     response.render("../views/auth/registerAdmin.pug", {
         isLogged: false,
-        page: "Registro Administrador",
-
-    })
-}
-const formRegister = (request, response) => {
-
-    response.render("../views/auth/register.pug", {
-        isLogged: false,
-        page: "Registro Alumno",
+        page: "Registro",
 
     })
 }
 
-const insertUSer = async (request, response) => {
+const insertarAdmon = async (request, response) => {
 
     console.log("Intentando registrar los datos del nuevo usuario en la Base de Datos");
-    console.log(`matricula: ${request.body.matricula}`)
+    console.log(`n. de trabajador: ${request.body.trabajador}`)
     console.log(`email: ${request.body.email}`)
     console.log(`password: ${request.body.password}`)
-    await check("matricula").notEmpty().withMessage("La matricula es necesaria").isLength({min:6}).run(request)
-    await check("email").notEmpty().withMessage("El email es necesario").isLength({min:25, max:25}).withMessage("Se debe usar tu mail escolar").run(request)
+    await check("trabajador").notEmpty().withMessage("La matricula es necesaria").isLength({min:3}).run(request)
+    await check("email").notEmpty().withMessage("El email es necesario").isLength({min:25, max:50}).withMessage("Se debe usar tu mail escolar").run(request)
     await check("nombre").notEmpty().withMessage("El nombre es necesario").run(request)
     await check("AP").notEmpty().withMessage("El primer apellido es necesario").run(request)
     await check("AM").notEmpty().withMessage("El segundo apellido es necesario ").run(request) //Está doble?
@@ -63,22 +46,22 @@ const insertUSer = async (request, response) => {
     console.log(`El total de errores fueron de: ${validationResult.length} errores de validación`)
 
     let resultValidate = validationResult(request);
-    const userExists = await Alumno.findOne({
+    const userExists = await Admin.findOne({
         where: {
-            matricula: request.body.matricula
+            trabajador: request.body.trabajador
         }
     });
 
-    const { matricula,email, nombre, AP, AM, genero, edad, programa, password } = request.body;
+    const { trabajador, email, nombre, AP, AM, genero, edad, programa, password } = request.body;
 
 
     if (userExists) {
 
-        response.render("auth/register.pug", ({
+        response.render("auth/registerAdmin.pug", ({
             page: "Registro",
-            errors: [{ message: `El usuario con la matrícula ${request.body.matricula} ya se encuentra registrado` }],
+            errors: [{ message: `El usuario con el número de trabajador ${request.body.trabajador} ya se encuentra registrado` }],
             user: {
-                matricula: request.body.matricula,
+                trabajador: request.body.trabajador,
                 email: request.body.email
             },
 
@@ -89,8 +72,8 @@ const insertUSer = async (request, response) => {
         const token = generateToken();
         //*Creando usuario */
 
-        let nuevoAlumno = await Alumno.create({
-            matricula,email, nombre, AP, AM, genero, edad,programa, password, token
+        let nuevoAdmon = await Admin.create({
+            trabajador,email, nombre, AP, AM, genero, edad,programa, password, token
                         
         });
         response.render("templates/message.pug", {
@@ -100,15 +83,15 @@ const insertUSer = async (request, response) => {
 
         }) //* Esta linea es la que inserta
 
-        emailRegister({ email, nombre, matricula, token });
+        emailRegister({ email, nombre, trabajador, token });
 
     }
 
     else {
-        response.render("auth/register.pug", ({
+        response.render("auth/registerAdmin.pug", ({
             page: "Registro",
-            errors: resultValidate.array(), alumno: {
-                matricula: request.body.matricula,
+            errors: resultValidate.array(), admin: {
+                trabajador: request.body.trabajador,
                 email: request.body.email
                         },
 
@@ -120,9 +103,9 @@ const insertUSer = async (request, response) => {
 
 const formPasswordUpdate = async (request, response) => {
     const { token } = request.params;
-    const alumno = await Alumno.findOne({ where: { token } })
-    console.log(alumno);
-    if (!alumno) {
+    const admin = await Admin.findOne({ where: { token } })
+    console.log(admin);
+    if (!admin) {
         response.render('auth/confirm-account', {
             page: 'Reestablecer contraseña',
             error: true,
@@ -141,7 +124,7 @@ const formPasswordUpdate = async (request, response) => {
 
 const formPasswordRecovery = (request, response) => {
 
-    response.render("auth/recovery.pug", {
+    response.render("auth/recoveryA.pug", {
         page: "Reestablecer contraseña",
 
     })
@@ -150,7 +133,7 @@ const formPasswordRecovery = (request, response) => {
 const confirmAccount = async (request, response) => {
 
     const tokenRecived = request.params.token
-    const userOwner = await Alumno.findOne({
+    const userOwner = await Admin.findOne({
         where: {
             token: tokenRecived
         }
@@ -194,7 +177,7 @@ const updatePassword = async (request, response) => {
     if (resultValidate.isEmpty()) {
         const { token } = request.params
         const { password } = request.body
-        const user = await Alumno.findOne({ where: { token } })
+        const user = await Admin.findOne({ where: { token } })
 
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
@@ -224,7 +207,7 @@ const emailChangePassword = async (request, response) => {
     const {nombre, email } = request.body;
 
     if (resultValidate.isEmpty()) {
-        const userExists = await Alumno.findOne({
+        const userExists = await Admin.findOne({
             where: {
                 email: request.body.email
             }
@@ -251,7 +234,7 @@ const emailChangePassword = async (request, response) => {
 
             response.render('templates/message', {
                 page: 'Email enviado',
-                message: `Enviamos un correo al mail ${email} para que puedas reestablecer tu contraseña`,
+                message: `${email}`,
                 type: "success"
             });
         }
@@ -277,20 +260,19 @@ const authenticateUser = async (request, response) => {
     await check("password").notEmpty().withMessage("La contraseña es necesaria").isLength({ max: 20, min: 8 }).withMessage("La contraseña debe contener entre 8 y 20 caracteres").run(request)
 
     // En caso de errores mostrarlos en pantalla
-
-    let resultValidate = validationResult(request);
-    if (resultValidate.isEmpty()) {
+    let resultValidation = validationResult(request);
+    if (resultValidation.isEmpty()) {
         const { email, password } = request.body;
         console.log(`El usuario: ${email} esta intentando acceder a la plataforma`)
 
-        const userExists = await Alumno.findOne({ where: { email } })
+        const userExists = await Admin.findOne({ where: { email } })
 
         if (!userExists) {
-            console.log("El usuario no existe")
+            console.log("El ususario no existe")
             response.render("auth/login.pug", {
                 page: "Login",
-                errors: [{ message: `El usuario asociado al correo: ${email} no se encontró` }],
-                alumno: {
+                errors: [{ message: `El usuario asociado al correo: ${email} no se encuentra registrado` }],
+                user: {
                     email
                 }
             })
@@ -302,7 +284,7 @@ const authenticateUser = async (request, response) => {
                 response.render("auth/login.pug", {
                     page: "Login",
                     errors: [{ message: `El usuario asociado al correo: ${email} existe pero no se encuentra verificado` }],
-                    alumno: {
+                    user: {
                         email
                     }
                 })
@@ -311,12 +293,12 @@ const authenticateUser = async (request, response) => {
                     response.render("auth/login.pug", {
                         page: "Login",
                         errors: [{ message: `El usuario y la contraseña no coinciden` }],
-                        alumno: {
+                        user: {
                             email
                         }
                     })
                 } else {
-                    console.log(`El usuario: ${email} existe y esta autenticado`);
+                    console.log(`El usuario: ${email} Existe y esta autenticado`);
                     //Generar el token de accesso
                     const token = generateJwt(userExists.id, userExists.id);
                     response.cookie('_token', token, {
@@ -333,7 +315,7 @@ const authenticateUser = async (request, response) => {
         response.render("../views/auth/login.pug", {
             page: "Login",
             errors: resultValidation.array(),
-            alumno: {
+            user: {
                 email: request.body.email
             }
         })
@@ -343,11 +325,11 @@ const authenticateUser = async (request, response) => {
 }
 
 const userHome = (request, response) => {
-  // const token = request.cookies._token;
-  // console.log(token)
-    response.render('../views/user/home.pug', {
-        showHeader: true,
-        page: "Home"
-    })
+   //const token = request.cookies._token;
+   //console.log(token)
+   response.render('../views/admin/home.pug', {
+    showHeader: true,
+    page: "Home"
+})
 }
-export {formLogin, selectType,formAdmon, formRegister, insertUSer, formPasswordUpdate, formPasswordRecovery, confirmAccount, updatePassword, emailChangePassword, authenticateUser, userHome}
+export {formLogin, formRegister, insertarAdmon, formPasswordUpdate, formPasswordRecovery, confirmAccount, updatePassword, emailChangePassword, authenticateUser, userHome}

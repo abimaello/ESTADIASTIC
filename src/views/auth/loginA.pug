@@ -28,7 +28,7 @@ block content
                 form.space-y-5(action="/login" method="post" noValidate) 
                     div 
                         label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="email") Email: 
-                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-sm.place-holder-gray-40(placeholder="matricula@utxicotepec.edu.mx" name="email" type="email")
+                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-sm.place-holder-gray-40(placeholder="n.trabajador@utxicotepec.edu.mx" name="email" type="email")
                     div 
                         label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="password") Password: 
                         input#password.w-full.px-3.py-2.border.border-gray-300.rounded-sm.place-holder-gray-400(placeholder="*********" name="password" type="password")
@@ -36,5 +36,5 @@ block content
                         input#button-login.w-full.bg-greenTIC.text-white.font-bold.py-3.rounded-x1(class="hover:bg-petrolTIC cursor-pointer rounded-xl" type="submit" value="Login")
 
                     div.flex.items.center.justify-evenly.pt-5
-                        a.text-sm.text-gray-400(href="/login/register" class="hover:text-greenTIC") Registrarme
-                        a.text-sm.text-gray-400(href="/login/recovery" class="hover:text-greenTIC") Reestablecer contraseña
+                        a.text-sm.text-gray-400(href="/login/select" class="hover:text-greenTIC") Registrarme
+                        a.text-sm.text-gray-400(href="/loginAdmon/recoveryA" class="hover:text-greenTIC") Reestablecer contraseña

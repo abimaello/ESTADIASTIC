@@ -1,0 +1,36 @@
+extends ../layout/index
+block styles 
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.css")
+block content
+    .py-5
+        if errors
+            each error in errors
+                div(class="mx-auto max-w-md text-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 text-xs" role="alert")
+                    strong(class="font-bold") Error:
+                    span= error.msg
+                    button(class="absolute top-0 bottom-0 right-0 px-4 py-3" aria-label="Close" onclick="this.parentElement.style.display='none'")
+                        i(class="fas fa-times")
+
+        script.
+            setTimeout(function(){
+                var alerts = document.querySelectorAll('[role="alert"]');
+                alerts.forEach(function(alert) {
+                    alert.style.display = 'none';
+                });
+            }, 5000);
+
+        h2.text-center.text-2xl.font-extrabold= page
+
+        div
+            .bg-greenAM.shadow.py-8.px-4.rounded-xl.mx-auto.max-w-4xl.my-10(class="md:px-10") 
+                .space-y-8
+                    h3.text-lg.leading-6.font-md.tex-gray-900.font-bold Logo de la empresa
+                    p.text-gray-600 Please drag and drop validate image files or browse in your files to select the image.                 
+            .bg-white.shadow.py-8.px-4.rounded-xl.mx-auto.max-w-4xl.my-10.space-y-8(class="md:px-10")
+                form(id='image' name="image" class="dropzone border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center mt-5" method="POST" action="/panel/addImage/${empresa.id}" enctype="multipart/form-data")
+                button#publish.w-full.bg-greenAM.text-white(class="text-gray-800 font-bold py-3 mt-5 cursor-pointer bg-greenAM rounded-xl hover:bg-woodAM hover:text-white" type="button" ) Publicar empresa
+
+block scripts
+    script( src="/js/customDropzone.js") 
+    script(src="https//cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js")
+        

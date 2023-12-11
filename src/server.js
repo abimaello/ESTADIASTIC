@@ -4,12 +4,15 @@
 import express from 'express';
 import router from './routes/generalRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import intershipRoutes from './routes/internshipRoutes.js'
+import adminRoutes from './routes/adminRoutes.js'
 import db from './config/db.js';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import Alumno from './models/Alumno.js';
 import Genero from './models/Genero.js';
 import Programa from './models/Programa.js';
+import panelRoutes from './routes/panelRoutes.js'
 
 //import {User, Property} from './models/Links.js';
 import dotenv from 'dotenv';
@@ -62,6 +65,9 @@ app.listen(port, (request,response) => {
  
  app.use('/', router)
  app.use('/login', userRoutes)
+ app.use('/internships',intershipRoutes)
+ app.use('/loginAdmon', adminRoutes)
+ app.use('/panel',panelRoutes)
  //app.use('/properties', propertyRoutes)
 
  

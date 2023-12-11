@@ -2,8 +2,8 @@ import {DataTypes} from 'sequelize'
 import db from '../config/db.js'
 import bcrypt from 'bcrypt';
 
-const Alumno=db.define('tb_alumnos', {
-    matricula: {
+const Admin=db.define('tb_admins', {
+    trabajador: {
         type: DataTypes.INTEGER,
         allowNull: false
         
@@ -58,9 +58,9 @@ const Alumno=db.define('tb_alumnos', {
 },
 {
     hooks: {
-        beforeCreate: async (Alumno) => {
+        beforeCreate: async (Admin) => {
             const salt = await bcrypt.genSalt(10);
-            Alumno.password = await bcrypt.hash(Alumno.password, salt);
+            Admin.password = await bcrypt.hash(Admin.password, salt);
         }
     },
     scopes: {
@@ -73,9 +73,9 @@ const Alumno=db.define('tb_alumnos', {
     }
 });
 
-Alumno.prototype.verifyPassword = function (password) {
+Admin.prototype.verifyPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 }
 
 
-export default Alumno;
+export default Admin;
